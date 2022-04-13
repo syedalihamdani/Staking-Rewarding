@@ -1,0 +1,9 @@
+1)   2 FT token a and b
+2)   Stacking contract      token a will stake and will reward token b
+3)   set 4 tears brown silver gold platinum
+4)   on browns  if stake 10000 daily will get 1.2% reward
+5)   silver 30000 will get 3.3% reward
+6)   on gold 50000 will get 6% reward
+7)   on platinum 80000 stake will get 8% get reward
+8)   on ever 10 minute can claim reward. don't let user claim reward before 10 minutes.
+9)   if user unstake token his account will close

@@ -1,0 +1,79 @@
+ Compiling your contracts...
+===========================
+> Compiling .\contracts\Migrations.sol
+> Compiling .\contracts\Test.sol
+> Artifacts written to C:\BigImmersiive\Staking-and-rewarding-\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.2+commit.661d1103.Emscripten.clang
+
+
+Starting migrations...
+======================
+> Network name:    'ropsten'
+> Network id:      3
+> Block gas limit: 8000000 (0x7a1200)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x78aa8e8c1d94297161c3ae8f1fa0f5b56ad8c660dc6d775233ece25632718a4e
+   > Blocks: 12           Seconds: 336
+   > contract address:    0xb9753a84757c7Cb560Fc7499B09f5F12AfbBA694
+   > block number:        12190709
+   > block timestamp:     1649847396
+   > account:             0x4f7959a3191e2505275c8b16c6228A64D3178bbE
+   > balance:             0.985261823385507622
+   > gas used:            248204 (0x3c98c)
+   > gas price:           74.651862651 gwei
+   > value sent:          0 ETH
+   > total cost:          0.018528890917428804 ETH
+
+   Pausing for 2 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 12190710)
+   > confirmation number: 2 (block: 12190711)
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.018528890917428804 ETH
+
+
+2_Test.js
+=========
+
+   Deploying 'Test'
+   ----------------
+   > transaction hash:    0x46c106c29691949be99b41ef7c780a98c846823342d39642dd4125ef169c87f6
+   > Blocks: 1            Seconds: 53
+   > contract address:    0xDbE29b54BE5dCD2dBAc1906E7eaff23BE969c59B
+   > block number:        12190717
+   > block timestamp:     1649847611
+   > balance:             0.971322568429928276
+   > gas used:            121077 (0x1d8f5)
+   > gas price:           80.852845657 gwei
+   > value sent:          0 ETH
+   > total cost:          0.009789419993612589 ETH
+
+   Pausing for 2 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 12190718)
+   > confirmation number: 2 (block: 12190719)
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.009789419993612589 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.028318310911041393 ETH
+
+
+
+Verifying Test
+Pass - Verified: https://ropsten.etherscan.io/address/0xDbE29b54BE5dCD2dBAc1906E7eaff23BE969c59B#code
