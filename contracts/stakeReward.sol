@@ -22,7 +22,6 @@ contract stakeReward{
 
     mapping(address=>uint) stakeBalance;
     mapping(address=>uint)updatedTime;
-    mapping(address=>tearLevel) TearLevel;    // @May have to remove this
 
     function tearLevelCalculator(uint _stakeBalance) public pure returns(tearLevel){
         if(_stakeBalance<10000){
@@ -45,18 +44,15 @@ contract stakeReward{
         StakeToken.transferFrom(msg.sender,address(this),_amount);
         stakeBalance[msg.sender]= stakeBalance[msg.sender]+_amount;
         updatedTime[msg.sender]=block.timestamp;
-        TearLevel[msg.sender]=tearLevelCalculator(stakeBalance[msg.sender]);
     }
 
     function getStakeBalane() external view returns(uint){
         return stakeBalance[msg.sender];
     }
-    function getTearLevel() external view returns(tearLevel){           // @May have to remove this
-        return TearLevel[msg.sender];
-    }
         function claimReward() external returns(uint){
              uint numberOfCycle=(block.timestamp-updatedTime[msg.sender])/1 minutes;   //TODO: Change 1 to 10 minutes;
              require(numberOfCycle >=1,"stakeReward:Reward time cycle has not been completed.You have to wait at least 10 minutes");
+             require(stakeBalance[msg.sender]==0,"stakeReward:You con not claim.Stake before claim");
              uint stakerTearLevel=uint(tearLevelCalculator(stakeBalance[msg.sender]));
              uint rewardRate;
              if(stakerTearLevel==0){
@@ -76,6 +72,13 @@ contract stakeReward{
              
              return (rewardAmount);
 
+        }
+
+        function unstake() external{
+            require(stakeBalance[msg.sender]>0,"stakeReward:You have not stake any token amount");
+            StakeToken.transfer(msg.sender,stakeBalance[msg.sender]);
+            delete stakeBalance[msg.sender];
+            delete updatedTime[msg.sender];
         }
 
         function getRewardTokenOwner() external view returns(address){

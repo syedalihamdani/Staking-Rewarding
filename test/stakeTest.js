@@ -60,16 +60,22 @@ contract("StakeToken,RewardToken,stakeReward",accounts=>{
         let tearLevel=await instance3.tearLevelCalculator(80000);
         assert.equal(tearLevel.toString(),'4');
     })
-    it("stakeReward:getTearLevel",async ()=>{
-        let instance3=await stakeReward.deployed();
-        let getTearLevel=await instance3.getTearLevel({from:accounts[6]});
-        assert.equal(getTearLevel.toString(),'1');
-    })
-    it("stakeReward:claimReward",async ()=>{
+    xit("stakeReward:claimReward",async ()=>{
         let instance3=await stakeReward.deployed();
         let claimReward=await instance3.claimReward({from:accounts[6]});
         // assert.equal(getTimeCycle,6);
         console.log(claimReward.toString());
+    })
+    it("stakeReward:getTearLevel",async ()=>{
+        let instance2=await RewardToken.deployed();
+        await instance2.approve(stakeReward.address,5000000000000);
+        let instance3=await stakeReward.deployed();
+        await instance3.unstake({from:accounts[6]});
+        let getStakeBalance=await instance3.getStakeBalane({from:accounts[6]});
+        assert.equal(getStakeBalance,0);
+        let instance=await StakeToken.deployed();
+        let balanceOf=await instance.balanceOf(accounts[6]);
+        assert.equal(balanceOf,15000);
     })
     
     
