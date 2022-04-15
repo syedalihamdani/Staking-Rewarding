@@ -65,6 +65,12 @@ contract("StakeToken,RewardToken,stakeReward",accounts=>{
         let getTearLevel=await instance3.getTearLevel({from:accounts[6]});
         assert.equal(getTearLevel.toString(),'1');
     })
+    it("stakeReward:claimReward",async ()=>{
+        let instance3=await stakeReward.deployed();
+        let claimReward=await instance3.claimReward({from:accounts[6]});
+        // assert.equal(getTimeCycle,6);
+        console.log(claimReward.toString());
+    })
     
     
     
