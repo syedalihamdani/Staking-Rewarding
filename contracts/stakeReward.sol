@@ -24,13 +24,13 @@ contract stakeReward{
     mapping(address=>uint)updatedTime;
 
     function tearLevelCalculator(uint _stakeBalance) public pure returns(tearLevel){
-        if(_stakeBalance<10000){
+        if(_stakeBalance<10000*1e18){
             return tearLevel.noLevel;
-        }else if(_stakeBalance>=10000 && _stakeBalance<30000){
+        }else if(_stakeBalance>=10000*1e18 && _stakeBalance<30000*1e18){
             return tearLevel.browns;
-        }else if(_stakeBalance>=30000 && _stakeBalance<50000){
+        }else if(_stakeBalance>=30000*1e18 && _stakeBalance<50000*1e18){
             return tearLevel.silver;
-        }else if(_stakeBalance>=50000 && _stakeBalance<80000){
+        }else if(_stakeBalance>=50000*1e18 && _stakeBalance<80000*1e18){
             return tearLevel.gold;
         }else{
             return tearLevel.platnium;
@@ -41,6 +41,9 @@ contract stakeReward{
         require(StakeToken.balanceOf(msg.sender)>=_amount,"stakeReward:You can not stake more then your balance");
         require(StakeToken.allowance(msg.sender,address(this))>=_amount,
         "stakeReward:You have not approve the token to this contract,or allowance is less then the amount");
+        if((block.timestamp-updatedTime[msg.sender])/1 minutes>=1){
+            claimReward();
+        }
         StakeToken.transferFrom(msg.sender,address(this),_amount);
         stakeBalance[msg.sender]= stakeBalance[msg.sender]+_amount;
         updatedTime[msg.sender]=block.timestamp;
@@ -49,10 +52,9 @@ contract stakeReward{
     function getStakeBalane() external view returns(uint){
         return stakeBalance[msg.sender];
     }
-        function claimReward() external returns(uint){
+        function claimReward() public{
              uint numberOfCycle=(block.timestamp-updatedTime[msg.sender])/1 minutes;   //TODO: Change 1 to 10 minutes;
              require(numberOfCycle >=1,"stakeReward:Reward time cycle has not been completed.You have to wait at least 10 minutes");
-             require(stakeBalance[msg.sender]==0,"stakeReward:You con not claim.Stake before claim");
              uint stakerTearLevel=uint(tearLevelCalculator(stakeBalance[msg.sender]));
              uint rewardRate;
              if(stakerTearLevel==0){
@@ -69,9 +71,6 @@ contract stakeReward{
              uint rewardAmount=rewardRate*numberOfCycle;
              RewardToken.transferFrom(RewardTokenOwner,msg.sender,rewardAmount);
              updatedTime[msg.sender]=block.timestamp;
-             
-             return (rewardAmount);
-
         }
 
         function unstake() external{
