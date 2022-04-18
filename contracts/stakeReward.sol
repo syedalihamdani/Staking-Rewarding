@@ -1,7 +1,8 @@
   // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-contract stakeReward{
+import "@openzeppelin/contracts/access/Ownable.sol";
+contract stakeReward is Ownable{
     IERC20 internal StakeToken;
     IERC20 internal RewardToken;
     address internal RewardTokenOwner;
@@ -83,7 +84,7 @@ contract stakeReward{
         function getRewardTokenOwner() external view returns(address){
         return RewardTokenOwner;
         }
-        function setRewardTokenOwner(address _RewardTokenOwner) external{
+        function setRewardTokenOwner(address _RewardTokenOwner) external onlyOwner{
          RewardTokenOwner=_RewardTokenOwner;
         }
 

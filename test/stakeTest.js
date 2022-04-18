@@ -49,13 +49,17 @@ contract("StakeToken,RewardToken,stakeReward",accounts=>{
         assert.equal(balanceOf2,amount);
     })
     it("stakeReward:stake",async ()=>{
+        let instance2=await RewardToken.deployed();
+        let amount=web3.utils.toWei('5000000000000','ether');
+        await instance2.approve(stakeReward.address,amount);
         let instance=await StakeToken.deployed();
-        let amount=web3.utils.toWei('10000','ether');
-        await instance.approve(stakeReward.address,amount,{from:accounts[6]});
+        let amount2=web3.utils.toWei('10000','ether');
+        await instance.approve(stakeReward.address,amount2,{from:accounts[6]});
         let instance3=await stakeReward.deployed();
-        await instance3.stake(amount,{from:accounts[6]});
+        await instance3.setRewardTokenOwner(accounts[0]);
+        await instance3.stake(amount2,{from:accounts[6]});
         let stakeBalance=await instance.balanceOf(stakeReward.address);
-        assert.equal(stakeBalance,amount);
+        assert.equal(stakeBalance,amount2);
     })
     it("stakeReward:getStakeBalance",async ()=>{
         let instance3=await stakeReward.deployed();
@@ -69,7 +73,7 @@ contract("StakeToken,RewardToken,stakeReward",accounts=>{
         let tearLevel=await instance3.tearLevelCalculator(amount);
         assert.equal(tearLevel.toString(),'4');
     })
-    it.only("stakeReward:claimReward",async ()=>{
+    xit("stakeReward:claimReward",async ()=>{
         let instance2=await RewardToken.deployed();
         let amount=web3.utils.toWei('5000000000000','ether');
         await instance2.approve(stakeReward.address,amount);
